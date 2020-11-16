@@ -8,6 +8,10 @@ SCREEN_HEIGHT = 350
 GAME_SPEED = 10
 GROUND_WIDTH = 2 * SCREEN_WIDTH
 GROUND_HEIGHT = 35
+MIN_HEIGHT = 255
+SPEED_JUMP = 50
+GRAVITY = 10
+
 
 class Donkey(pygame.sprite.Sprite):
     def __init__(self):
@@ -20,8 +24,10 @@ class Donkey(pygame.sprite.Sprite):
                       pygame.image.load('images/animations/Andar (5).png').convert_alpha(),
                       pygame.image.load('images/animations/Andar (6).png').convert_alpha()]
 
+        self.speed = SPEED_JUMP
+
         self.current_image = 0
-        self.image = pygame.image.load('images/original.png').convert_alpha()
+        self.image = pygame.image.load('images/original.png').convert_alpha()        
         self.rect = self.image.get_rect()
         self.rect[0] = 20
         self.rect[1] = 255
@@ -30,8 +36,16 @@ class Donkey(pygame.sprite.Sprite):
         self.current_image = (self.current_image + 1) % 6
         self.image = self.images[self.current_image]
 
-        pass
+        self.speed += GRAVITY       
+        self.rect[1] += self.speed
 
+        if self.rect[1] > 255:
+            self.rect[1] = 255
+            self.speed = 0      
+    
+    def jump(self):
+        self.speed = -SPEED_JUMP 
+       
 
 class Ground(pygame.sprite.Sprite):
     def __init__(self, xpos):
@@ -69,6 +83,7 @@ clock = pygame.time.Clock()
 
 
 # Principal
+count_jump = 0
 running = True
 while running:
     clock.tick(20)
@@ -76,7 +91,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         
-
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                if count_jump < 2:
+                    donkey.jump()
+                    count_jump += 1
+                else:
+                    count_jump = 0
+                
     screen.blit(BACKGROUND, (0, 0))
 
     if is_off_screen(ground_group.sprites()[0]):
