@@ -8,6 +8,7 @@ setup(
     description="DK, T-rex style",
     url="https://github.com/Murilo-Gruppi/DonkeyKong-BirdIsland",
     packages=find_packages(),
+    include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -17,7 +18,7 @@ setup(
     install_requires=['pygame>=2.0'],
     entry_points={
         'console_scripts': [
-            'dk-birdisland=dk-birdisland.main:game'
+            'DKbirdisland=DKbirdisland.main:game'
             ]
         }
 )
