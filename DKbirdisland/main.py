@@ -1,4 +1,12 @@
 import pygame
+import os
+
+main_dir = os.path.split(os.path.abspath(__file__))[0]
+
+def load_img(name):
+    path=os.path.join(main_dir,"images", name)
+    return pygame.image.load(path)
+
 
 def game():
     pygame.display.set_caption("Donkey Kong: Bird Island")
@@ -17,23 +25,23 @@ def game():
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
 
-            self.images_walk = [pygame.image.load('images/animations/Andar (1).png').convert_alpha(),
-                                pygame.image.load('images/animations/Andar (2).png').convert_alpha(),
-                                pygame.image.load('images/animations/Andar (3).png').convert_alpha(),
-                                pygame.image.load('images/animations/Andar (4).png').convert_alpha(),
-                                pygame.image.load('images/animations/Andar (5).png').convert_alpha(),
-                                pygame.image.load('images/animations/Andar (6).png').convert_alpha()]
+            self.images_walk = [load_img('animations/Andar (1).png').convert_alpha(),
+                                load_img('animations/Andar (2).png').convert_alpha(),
+                                load_img('animations/Andar (3).png').convert_alpha(),
+                                load_img('animations/Andar (4).png').convert_alpha(),
+                                load_img('animations/Andar (5).png').convert_alpha(),
+                                load_img('animations/Andar (6).png').convert_alpha()]
 
-            self.images_jump = [pygame.image.load('images/animations/Jump (1).png').convert_alpha(),
-                                pygame.image.load('images/animations/Jump (2).png').convert_alpha(),
-                                pygame.image.load('images/animations/Jump (3).png').convert_alpha(),
-                                pygame.image.load('images/animations/Jump (4).png').convert_alpha(),
-                                pygame.image.load('images/animations/Jump (5).png').convert_alpha()]
+            self.images_jump = [load_img('animations/Jump (1).png').convert_alpha(),
+                                load_img('animations/Jump (2).png').convert_alpha(),
+                                load_img('animations/Jump (3).png').convert_alpha(),
+                                load_img('animations/Jump (4).png').convert_alpha(),
+                                load_img('animations/Jump (5).png').convert_alpha()]
 
             self.speed = SPEED_JUMP
 
             self.current_image = 0
-            self.image = pygame.image.load('images/original.png').convert_alpha()
+            self.image = load_img('original.png').convert_alpha()
             self.rect = self.image.get_rect()
             self.rect[0] = 20
             self.rect[1] = 228
@@ -58,7 +66,7 @@ def game():
         def __init__(self, xpos):
             pygame.sprite.Sprite.__init__(self)
 
-            self.image = pygame.image.load('images/ground.fw.png')
+            self.image = load_img('ground.fw.png')
             self.image = pygame.transform.scale(self.image, (GROUND_WIDTH, GROUND_HEIGHT))
 
             self.rect = self.image.get_rect()
@@ -76,7 +84,7 @@ def game():
     pygame.init()
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    BACKGROUND = pygame.image.load("images/background.png")
+    BACKGROUND = load_img("background.png")
 
     donkey_group = pygame.sprite.Group()
     donkey = Donkey()

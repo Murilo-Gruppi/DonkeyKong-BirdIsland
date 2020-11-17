@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
  
 setup(
-    name="dk-birdisland",
-    version="0.1.dev",
+    name="DKbirdisland",
+    version="0.1.dev3",
     author="Murilo Castro",
     author_email="murilo.castro@ccc.ufcg.edu.br",
     description="DK, T-rex style",

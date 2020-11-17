@@ -1,1 +1,2 @@
-include dk-birdisland/images/*.png
+include DKbirdisland/images/*.png
+include DKbirdisland/images/animations/*.png
