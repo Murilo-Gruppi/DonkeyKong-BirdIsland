@@ -1,7 +1,6 @@
 import pygame
 
 pygame.display.set_caption("Donkey Kong: Bird Island")
-donkey_kong = pygame.image.load("images/original.png")
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 350
@@ -73,51 +72,51 @@ def is_off_screen(sprite):
     return sprite.rect[0] < -(sprite.rect[2])
 
 
-pygame.init()
+def game():
+    pygame.init()
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-BACKGROUND = pygame.image.load("images/background.png")
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    BACKGROUND = pygame.image.load("images/background.png")
 
-donkey_group = pygame.sprite.Group()
-donkey = Donkey()
-donkey_group.add(donkey)
+    donkey_group = pygame.sprite.Group()
+    donkey = Donkey()
+    donkey_group.add(donkey)
 
-ground_group = pygame.sprite.Group()
-for i in range(2):
-    ground = Ground(GROUND_WIDTH * i)
-    ground_group.add(ground)
+    ground_group = pygame.sprite.Group()
+    for i in range(2):
+        ground = Ground(GROUND_WIDTH * i)
+        ground_group.add(ground)
 
-clock = pygame.time.Clock()
+    clock = pygame.time.Clock()
 
-# Principal
-count_jump = 0
-running = True
+    # Principal
+    running = True
 
-while running:
-    clock.tick(20)
-    isjumping = False
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    while running:
+        clock.tick(20)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
 
-        keys = pygame.key.get_pressed()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                donkey.jump()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    donkey.jump()
 
-    screen.blit(BACKGROUND, (0, 0))
+        screen.blit(BACKGROUND, (0, 0))
 
-    if is_off_screen(ground_group.sprites()[0]):
-        ground_group.remove(ground_group.sprites()[0])
+        if is_off_screen(ground_group.sprites()[0]):
+            ground_group.remove(ground_group.sprites()[0])
 
-        new_ground = Ground(GROUND_WIDTH - 50)
-        ground_group.add(new_ground)
+            new_ground = Ground(GROUND_WIDTH - 50)
+            ground_group.add(new_ground)
 
-    donkey_group.update()
-    donkey_group.draw(screen)
-    ground_group.update()
-    ground_group.draw(screen)
+        donkey_group.update()
+        donkey_group.draw(screen)
+        ground_group.update()
+        ground_group.draw(screen)
 
-    pygame.display.update()
+        pygame.display.update()
 
-pygame.quit()
+if __name__ == '__main__':
+    game()
