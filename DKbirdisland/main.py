@@ -14,6 +14,7 @@ def load_img(name):
 def game():
     pygame.display.set_caption("Donkey Kong: Bird Island")
 
+
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
     GAME_SPEED = 20
@@ -48,9 +49,12 @@ def game():
             self.rect[0] = 20
             self.rect[1] = 228
 
+            
+
         def update(self):
             self.current_image = (self.current_image + 1) % 6
             self.image = self.images_walk[self.current_image]
+            
 
             self.speed += GRAVITY
             self.rect[1] += self.speed
@@ -81,28 +85,21 @@ def game():
         def __init__(self, xpos):
             pygame.sprite.Sprite.__init__(self)
 
-            self.images = [load_img('barril.png').convert_alpha(),
-                           load_img('snake1.png').convert_alpha(),
+            self.images = [load_img('snake1.png').convert_alpha(),
                            load_img('barris.png').convert_alpha()]
 
-            
-
-            range = random.randrange(0, 3)
+            range = random.randrange(0, 2)
 
             self.image = self.images[range]
 
             if range == 0:
-                obstacle_y = 45
+                self.image = pygame.transform.scale(self.image,(40, 70))
             elif range == 1:
-                self.image = pygame.transform.scale(self.image, (40, 70))
-                obstacle_y = 70
-            else:
-                self.image = pygame.transform.scale(self.image, (73, 60))
-                obstacle_y = 60
+                self.image = pygame.transform.scale(self.image, (73, 70))
 
             self.rect = self.image.get_rect()
             self.rect[0] = xpos
-            self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT - obstacle_y
+            self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT - 70
 
 
         def update(self):
@@ -171,7 +168,6 @@ def game():
 
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
             break
-
 
 if __name__ == '__main__':
     game()
