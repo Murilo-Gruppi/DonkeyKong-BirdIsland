@@ -14,14 +14,15 @@ def load_img(name):
 def game():
     pygame.display.set_caption("Donkey Kong: Bird Island")
 
+
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
     GAME_SPEED = 20
     GROUND_WIDTH = 2 * SCREEN_WIDTH
     GROUND_HEIGHT = 35
     MIN_HEIGHT = 228
-    SPEED_JUMP = 12
-    GRAVITY = 1
+    SPEED_JUMP = 50
+    GRAVITY = 9
 
     class Donkey(pygame.sprite.Sprite):
         def __init__(self):
@@ -48,9 +49,12 @@ def game():
             self.rect[0] = 20
             self.rect[1] = 228
 
+            
+
         def update(self):
             self.current_image = (self.current_image + 1) % 6
             self.image = self.images_walk[self.current_image]
+            
 
             self.speed += GRAVITY
             self.rect[1] += self.speed
@@ -81,26 +85,21 @@ def game():
         def __init__(self, xpos):
             pygame.sprite.Sprite.__init__(self)
 
-            self.images = [load_img('barril.png').convert_alpha(),
-                           load_img('snake1.png').convert_alpha(),
+            self.images = [load_img('snake1.png').convert_alpha(),
                            load_img('barris.png').convert_alpha()]
 
-            range = random.randrange(0, 3)
+            range = random.randrange(0, 2)
 
             self.image = self.images[range]
 
             if range == 0:
-                obstacle_y = 45
+                self.image = pygame.transform.scale(self.image,(40, 70))
             elif range == 1:
-                self.image = pygame.transform.scale(self.image, (40, 70))
-                obstacle_y = 70
-            else:
-                self.image = pygame.transform.scale(self.image, (73, 60))
-                obstacle_y = 60
+                self.image = pygame.transform.scale(self.image, (73, 70))
 
             self.rect = self.image.get_rect()
             self.rect[0] = xpos
-            self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT - obstacle_y
+            self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT - 70
 
 
         def update(self):
@@ -119,13 +118,13 @@ def game():
     donkey_group.add(donkey)
 
     ground_group = pygame.sprite.Group()
-    obstacle_group = pygame.sprite.Group()
 
     for i in range(2):
         ground = Ground(GROUND_WIDTH * i)
         ground_group.add(ground)
 
-    obstacle = Obstacles(600)
+    obstacle_group = pygame.sprite.Group()
+    obstacle = Obstacles(800)
     obstacle_group.add(obstacle)
 
     clock = pygame.time.Clock()
@@ -153,7 +152,7 @@ def game():
 
         if is_off_screen(obstacle_group.sprites()[0]):
             obstacle_group.remove(obstacle_group.sprites()[0])
-            new_obstacle = Obstacles(random.randint(800, 2000))
+            new_obstacle = Obstacles(random.randint(800, 1000))
             obstacle_group.add(new_obstacle)
 
 
@@ -167,6 +166,8 @@ def game():
 
         pygame.display.update()
 
+        if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
+            break
 
 if __name__ == '__main__':
     game()
