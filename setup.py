@@ -1,11 +1,16 @@
 from setuptools import setup, find_packages
- 
+
+with open("README.md", "r") as fread:
+    long_description = fread.read()
+
 setup(
     name="DKbirdisland",
-    version="0.1.dev3",
+    version="0.0.1.dev1",
     author="Murilo Castro",
     author_email="murilo.castro@ccc.ufcg.edu.br",
     description="DK, T-rex style",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/Murilo-Gruppi/DonkeyKong-BirdIsland",
     packages=find_packages(),
     include_package_data=True,
@@ -19,7 +24,7 @@ setup(
     entry_points={
         'console_scripts': [
             'DKbirdisland=DKbirdisland.main:game'
-            ]
-        }
+        ]
+    }
 )
 
