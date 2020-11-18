@@ -20,8 +20,8 @@ def game():
     GROUND_WIDTH = 2 * SCREEN_WIDTH
     GROUND_HEIGHT = 35
     MIN_HEIGHT = 228
-    SPEED_JUMP = 12
-    GRAVITY = 1
+    SPEED_JUMP = 50
+    GRAVITY = 9
 
     class Donkey(pygame.sprite.Sprite):
         def __init__(self):
@@ -85,6 +85,8 @@ def game():
                            load_img('snake1.png').convert_alpha(),
                            load_img('barris.png').convert_alpha()]
 
+            
+
             range = random.randrange(0, 3)
 
             self.image = self.images[range]
@@ -119,13 +121,13 @@ def game():
     donkey_group.add(donkey)
 
     ground_group = pygame.sprite.Group()
-    obstacle_group = pygame.sprite.Group()
 
     for i in range(2):
         ground = Ground(GROUND_WIDTH * i)
         ground_group.add(ground)
 
-    obstacle = Obstacles(600)
+    obstacle_group = pygame.sprite.Group()
+    obstacle = Obstacles(800)
     obstacle_group.add(obstacle)
 
     clock = pygame.time.Clock()
@@ -153,7 +155,7 @@ def game():
 
         if is_off_screen(obstacle_group.sprites()[0]):
             obstacle_group.remove(obstacle_group.sprites()[0])
-            new_obstacle = Obstacles(random.randint(800, 2000))
+            new_obstacle = Obstacles(random.randint(800, 1000))
             obstacle_group.add(new_obstacle)
 
 
@@ -166,6 +168,9 @@ def game():
         ground_group.draw(screen)
 
         pygame.display.update()
+
+        if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
+            break
 
 
 if __name__ == '__main__':
