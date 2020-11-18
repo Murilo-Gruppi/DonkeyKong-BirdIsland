@@ -24,7 +24,7 @@ setup(
     entry_points={
         'console_scripts': [
             'DKbirdisland=DKbirdisland.main:game'
-            ]
-        }
+        ]
+    }
 )
 
