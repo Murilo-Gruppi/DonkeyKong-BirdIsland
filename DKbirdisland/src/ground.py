@@ -1,15 +1,8 @@
 import pygame
 from .tools import load_img
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 350
-GAME_SPEED = 25
-GROUND_WIDTH = 2 * SCREEN_WIDTH
-GROUND_HEIGHT = 35
-
-
 class Ground(pygame.sprite.Sprite):
-    def __init__(self, xpos):
+    def __init__(self, xpos, GROUND_WIDTH, GROUND_HEIGHT, GAME_SPEED, SCREEN_HEIGHT):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = load_img('ground.fw.png')
@@ -19,5 +12,5 @@ class Ground(pygame.sprite.Sprite):
         self.rect[0] = xpos
         self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT
 
-    def update(self):
+    def update(self, GAME_SPEED):
         self.rect[0] -= GAME_SPEED

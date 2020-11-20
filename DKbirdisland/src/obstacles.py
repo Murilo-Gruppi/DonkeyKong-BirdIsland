@@ -2,13 +2,8 @@ import pygame
 from random import randrange
 from .tools import load_img
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 350
-GROUND_HEIGHT = 35
-GAME_SPEED = 25
-
 class Obstacles(pygame.sprite.Sprite):
-    def __init__(self, xpos):
+    def __init__(self, xpos, SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED):
         pygame.sprite.Sprite.__init__(self)
 
         self.images = [load_img('snake1.png').convert_alpha(),
@@ -26,5 +21,5 @@ class Obstacles(pygame.sprite.Sprite):
         self.rect[0] = xpos
         self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT - 70
 
-    def update(self):
+    def update(self, GAME_SPEED):
         self.rect[0] -= GAME_SPEED

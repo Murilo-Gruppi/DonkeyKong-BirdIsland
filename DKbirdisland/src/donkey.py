@@ -1,12 +1,8 @@
 import pygame
 from .tools import load_img
 
-MIN_HEIGHT = 228
-SPEED_JUMP = 50
-GRAVITY = 9
-
 class Donkey(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
         pygame.sprite.Sprite.__init__(self)
 
         self.images_walk = [load_img('animations/Andar (1).png').convert_alpha(),
@@ -30,7 +26,7 @@ class Donkey(pygame.sprite.Sprite):
         self.rect[0] = 20
         self.rect[1] = 228
 
-    def update(self):
+    def update(self, GRAVITY, MIN_HEIGHT):
         self.current_image = (self.current_image + 1) % 6
         self.image = self.images_walk[self.current_image]
 
@@ -41,6 +37,6 @@ class Donkey(pygame.sprite.Sprite):
             self.rect[1] = MIN_HEIGHT
             self.speed = 0
 
-    def jump(self):
+    def jump(self, SPEED_JUMP, MIN_HEIGHT):
         if self.rect[1] == MIN_HEIGHT:
             self.speed = -SPEED_JUMP
