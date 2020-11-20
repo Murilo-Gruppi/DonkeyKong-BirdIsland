@@ -11,5 +11,5 @@ pip install DKbirdisland
 To start the game:
 
 ```
-DKbirdisland
+dkbirdisland
 ```
