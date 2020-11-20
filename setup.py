@@ -23,7 +23,7 @@ setup(
     install_requires=['pygame>=2.0'],
     entry_points={
         'console_scripts': [
-            'DKbirdisland=DKbirdisland.main:game'
+            'dkbirdisland = DKbirdisland.__main__:main'
         ]
     }
 )
