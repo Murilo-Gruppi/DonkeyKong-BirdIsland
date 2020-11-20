@@ -14,7 +14,6 @@ def load_img(name):
 def game():
     pygame.display.set_caption("Donkey Kong: Bird Island")
 
-
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
     GAME_SPEED = 20
@@ -49,12 +48,9 @@ def game():
             self.rect[0] = 20
             self.rect[1] = 228
 
-            
-
         def update(self):
             self.current_image = (self.current_image + 1) % 6
             self.image = self.images_walk[self.current_image]
-            
 
             self.speed += GRAVITY
             self.rect[1] += self.speed
@@ -93,7 +89,7 @@ def game():
             self.image = self.images[range]
 
             if range == 0:
-                self.image = pygame.transform.scale(self.image,(40, 70))
+                self.image = pygame.transform.scale(self.image, (40, 70))
             elif range == 1:
                 self.image = pygame.transform.scale(self.image, (73, 70))
 
@@ -101,12 +97,14 @@ def game():
             self.rect[0] = xpos
             self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT - 70
 
-
         def update(self):
             self.rect[0] -= GAME_SPEED
 
     def is_off_screen(sprite):
         return sprite.rect[0] < -(sprite.rect[2])
+
+    def get_random(sprite, width):
+        return sprite.rect[0] <= width
 
     pygame.init()
 
@@ -130,6 +128,7 @@ def game():
     clock = pygame.time.Clock()
 
     # Principal
+    verify = True
     running = True
     while running:
         clock.tick(20)
@@ -150,11 +149,14 @@ def game():
             new_ground = Ground(GROUND_WIDTH - 50)
             ground_group.add(new_ground)
 
-        if is_off_screen(obstacle_group.sprites()[0]):
+        if len(obstacle_group.sprites()) > 0 and is_off_screen(obstacle_group.sprites()[0]):
             obstacle_group.remove(obstacle_group.sprites()[0])
-            new_obstacle = Obstacles(random.randint(800, 1000))
-            obstacle_group.add(new_obstacle)
+            verify = True
 
+        if get_random(obstacle_group.sprites()[0], 300) and verify:
+            verify = False
+            new_obstacle1 = Obstacles(random.randint(800, 1300))
+            obstacle_group.add(new_obstacle1)
 
         donkey_group.update()
         obstacle_group.update()
@@ -168,6 +170,7 @@ def game():
 
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
             break
+
 
 if __name__ == '__main__':
     game()
