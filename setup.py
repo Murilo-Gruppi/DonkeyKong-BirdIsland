@@ -4,7 +4,7 @@ with open("README.md", "r") as fread:
     long_description = fread.read()
 
 setup(
-    name="DKbirdisland",
+    name="dkbirdisland",
     version="0.1.0.dev3",
     author="Murilo Castro",
     author_email="murilo.castro@ccc.ufcg.edu.br",
