@@ -5,7 +5,7 @@ with open("README.md", "r") as fread:
 
 setup(
     name="DKbirdisland",
-    version="0.1.0.dev1",
+    version="0.1.1.dev1",
     author="Murilo Castro",
     author_email="murilo.castro@ccc.ufcg.edu.br",
     description="DK, T-rex style",
@@ -23,7 +23,7 @@ setup(
     install_requires=['pygame>=2.0'],
     entry_points={
         'console_scripts': [
-            'DKbirdisland=DKbirdisland.main:game'
+            'dkbirdisland = DKbirdisland.__main__:main'
         ]
     }
 )
