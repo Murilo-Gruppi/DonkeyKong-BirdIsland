@@ -1,9 +1,9 @@
 import pygame
 import os
 
-SRC_PATH = os.path.dirname(os.path.abspath(__file__))
+MAIN_DIR = os.path.split(os.path.abspath(__file__))[0]
 
 def load_img(name):
-    path = os.path.join(SRC_PATH ,'../images', name)
+    path = os.path.join(MAIN_DIR ,'../images', name)
     return pygame.image.load(path)
 
