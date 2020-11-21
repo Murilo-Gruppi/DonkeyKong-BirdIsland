@@ -9,7 +9,7 @@ class Obstacles(pygame.sprite.Sprite):
         self.images = [tools.load_img('snake1.png').convert_alpha(),
                         tools.load_img('barris.png').convert_alpha()]
 
-        range = randrange(0, 2)
+        range = randrange(0, 3)
 
         self.image = self.images[range]
         if range == 0:
@@ -19,7 +19,7 @@ class Obstacles(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.rect[0] = xpos
-        self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT - 70
+        self.rect[1] = SCREEN_HEIGHT - GROUND_HEIGHT - self.rect[3]
 
     def update(self, GAME_SPEED):
         self.rect[0] -= GAME_SPEED

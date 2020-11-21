@@ -54,6 +54,10 @@ class Donkey(pygame.sprite.Sprite):
 
     def jump(self, SPEED_JUMP, MIN_HEIGHT):
         if self.rect[1] == MIN_HEIGHT:
-            self.speed = -SPEED_JUMP
+            self.speed -= SPEED_JUMP
             self.current_image = 0
             self.isJumping = True
+    
+    def down(self, SPEED_JUMP, MIN_HEIGHT, GRAVITY):
+        if self.rect[1] < MIN_HEIGHT:
+            self.speed += SPEED_JUMP + GRAVITY
