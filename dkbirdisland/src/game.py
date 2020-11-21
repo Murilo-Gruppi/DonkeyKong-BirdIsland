@@ -12,7 +12,7 @@ def game():
 
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
-    GAME_SPEED = 20
+    GAME_SPEED = 60
     SPEED_JUMP = 50
     GRAVITY = 9
     GROUND_WIDTH = 2 * SCREEN_WIDTH
@@ -58,6 +58,9 @@ def game():
                 if event.key == pygame.K_UP:
                     donkey.jump(SPEED_JUMP, MIN_HEIGHT)
 
+                if event.key == pygame.K_DOWN:
+                    donkey.down(SPEED_JUMP, MIN_HEIGHT, GRAVITY)
+        
         screen.blit(BACKGROUND, (0, 0))
 
         if is_off_screen(ground_group.sprites()[0]):
@@ -71,7 +74,7 @@ def game():
 
         if get_random(obstacle_group.sprites()[0], 300) and verify:
             verify = False
-            new_obstacle1 = Obstacles(random.randint(800, 1150), SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED)
+            new_obstacle1 = Obstacles(random.randint(800, 1300), SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED)
             obstacle_group.add(new_obstacle1)
 
 
@@ -85,8 +88,9 @@ def game():
 
         pygame.display.update()
 
-        if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
-            break
+        #if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
+            #break
+        
         clock.tick(20)
 
         
