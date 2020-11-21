@@ -9,7 +9,7 @@ class Obstacles(pygame.sprite.Sprite):
         self.images = [tools.load_img('snake1.png').convert_alpha(),
                         tools.load_img('barris.png').convert_alpha()]
 
-        range = randrange(0, 3)
+        range = randrange(0, 2)
 
         self.image = self.images[range]
         if range == 0:
