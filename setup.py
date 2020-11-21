@@ -5,7 +5,7 @@ with open("README.md", "r") as fread:
 
 setup(
     name="dkbirdisland",
-    version="0.1.0",
+    version="0.1.2",
     author="Murilo Castro",
     author_email="murilo.castro@ccc.ufcg.edu.br",
     description="DK, T-rex style",
