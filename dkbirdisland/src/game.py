@@ -1,5 +1,4 @@
 import pygame
-import sys
 import random
 from .donkey import Donkey
 from .ground import Ground
@@ -10,14 +9,22 @@ from . import tools
 def game():
     pygame.display.set_caption("Donkey Kong: Bird Island")
 
+    pygame.font.init()
+
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
-    GAME_SPEED = 20
+    GAME_SPEED = 16
     SPEED_JUMP = 50
     GRAVITY = 9
     GROUND_WIDTH = 2 * SCREEN_WIDTH
     GROUND_HEIGHT = 35
     MIN_HEIGHT = 228
+    SCORE = 0
+    FONT = tools.load_font('Jumpman.ttf', 32)
+
+    def scoreboard(x, y):
+        scoreboard = FONT.render(str(SCORE), True, (255, 255, 255))
+        screen.blit(scoreboard, (x, y))
 
     def is_off_screen(sprite):
         return sprite.rect[0] < -(sprite.rect[2])
@@ -48,8 +55,10 @@ def game():
     # Principal
     verify = True
     running = True
+
     while running:
-        
+        SCORE += 1
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -60,8 +69,9 @@ def game():
 
                 if event.key == pygame.K_DOWN:
                     donkey.down(SPEED_JUMP, MIN_HEIGHT, GRAVITY)
-        
+
         screen.blit(BACKGROUND, (0, 0))
+        scoreboard(720, 0)
 
         if is_off_screen(ground_group.sprites()[0]):
             ground_group.remove(ground_group.sprites()[0])
@@ -76,7 +86,6 @@ def game():
             verify = False
             new_obstacle1 = Obstacles(random.randint(800, 1300), SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED)
             obstacle_group.add(new_obstacle1)
-
 
         donkey_group.update(GRAVITY, MIN_HEIGHT)
         obstacle_group.update(GAME_SPEED)
