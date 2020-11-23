@@ -13,3 +13,7 @@ To start the game:
 ```
 dkbirdisland
 ```
+
+# Game Controls
+  🡑 Jump
+  🡓 Fall faster
