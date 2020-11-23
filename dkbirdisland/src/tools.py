@@ -7,3 +7,6 @@ def load_img(name):
     path = os.path.join(MAIN_DIR ,'../images', name)
     return pygame.image.load(path)
 
+def load_font(name, size):
+  path = os.path.join(MAIN_DIR, '../fonts', name)
+  return pygame.font.Font(path, size)
