@@ -3,6 +3,7 @@ import random
 from .donkey import Donkey
 from .ground import Ground
 from .obstacles import Obstacles
+from .scoreboard import Scoreboard
 from . import tools
 
 
@@ -13,18 +14,12 @@ def game():
 
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
-    GAME_SPEED = 16
+    GAME_SPEED = 40
     SPEED_JUMP = 50
     GRAVITY = 9
     GROUND_WIDTH = 2 * SCREEN_WIDTH
     GROUND_HEIGHT = 35
     MIN_HEIGHT = 228
-    SCORE = 0
-    FONT = tools.load_font('Jumpman.ttf', 32)
-
-    def scoreboard(x, y):
-        scoreboard = FONT.render(str(SCORE), True, (255, 255, 255))
-        screen.blit(scoreboard, (x, y))
 
     def is_off_screen(sprite):
         return sprite.rect[0] < -(sprite.rect[2])
@@ -50,6 +45,8 @@ def game():
     obstacle = Obstacles(800, SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED)
     obstacle_group.add(obstacle)
 
+    scb = Scoreboard()
+
     clock = pygame.time.Clock()
 
     # Principal
@@ -57,8 +54,6 @@ def game():
     running = True
 
     while running:
-        SCORE += 1
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -71,7 +66,6 @@ def game():
                     donkey.down(SPEED_JUMP, MIN_HEIGHT, GRAVITY)
 
         screen.blit(BACKGROUND, (0, 0))
-        scoreboard(720, 0)
 
         if is_off_screen(ground_group.sprites()[0]):
             ground_group.remove(ground_group.sprites()[0])
@@ -87,10 +81,12 @@ def game():
             new_obstacle1 = Obstacles(random.randint(800, 1300), SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED)
             obstacle_group.add(new_obstacle1)
 
+        scb.update()
         donkey_group.update(GRAVITY, MIN_HEIGHT)
         obstacle_group.update(GAME_SPEED)
         ground_group.update(GAME_SPEED)
 
+        scb.draw(screen)
         donkey_group.draw(screen)
         obstacle_group.draw(screen)
         ground_group.draw(screen)
@@ -99,7 +95,7 @@ def game():
 
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
             break
-        
+
         clock.tick(20)
 
         
