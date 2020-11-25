@@ -14,7 +14,7 @@ def game():
 
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
-    GAME_SPEED = 40
+    GAME_SPEED = 20
     SPEED_JUMP = 50
     GRAVITY = 9
     GROUND_WIDTH = 2 * SCREEN_WIDTH
