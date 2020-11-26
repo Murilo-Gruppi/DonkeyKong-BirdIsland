@@ -14,7 +14,7 @@ def game():
 
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
-    GAME_SPEED = 20
+    GAME_SPEED = 16
     SPEED_JUMP = 50
     GRAVITY = 9
     GROUND_WIDTH = 2 * SCREEN_WIDTH
@@ -32,6 +32,7 @@ def game():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     BACKGROUND = tools.load_img("background.png")
 
+    # Defining groups and instantiating objects
     donkey_group = pygame.sprite.Group()
     donkey = Donkey(MIN_HEIGHT, SPEED_JUMP, GRAVITY)
     donkey_group.add(donkey)
@@ -49,10 +50,10 @@ def game():
 
     clock = pygame.time.Clock()
 
-    # Principal
+    # Main loop
     verify = True
     running = True
-
+    count = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -67,19 +68,35 @@ def game():
 
         screen.blit(BACKGROUND, (0, 0))
 
+        # Adds a new ground and remove
         if is_off_screen(ground_group.sprites()[0]):
-            ground_group.remove(ground_group.sprites()[0])
-            new_ground = Ground(GROUND_WIDTH - 50, GROUND_WIDTH, GROUND_HEIGHT, GAME_SPEED, SCREEN_HEIGHT)
+            new_ground = Ground(ground_group.sprites()[1].rect[0] + GROUND_WIDTH, GROUND_WIDTH, GROUND_HEIGHT, GAME_SPEED, SCREEN_HEIGHT)
             ground_group.add(new_ground)
+            ground_group.remove(ground_group.sprites()[0])
 
+        # Removes obstacles
         if len(obstacle_group.sprites()) > 0 and is_off_screen(obstacle_group.sprites()[0]):
             obstacle_group.remove(obstacle_group.sprites()[0])
             verify = True
-
+        
+        # Check if the distance between the obstacles is correct
         if get_random(obstacle_group.sprites()[0], 300) and verify:
             verify = False
             new_obstacle1 = Obstacles(random.randint(800, 1300), SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED)
             obstacle_group.add(new_obstacle1)
+
+        #Acceleration
+        acceleration = 0
+        if GAME_SPEED < 60:
+            if count == 100:
+                acceleration = 1
+            elif count == 200:
+                acceleration = 2
+                count = 0
+            GAME_SPEED += acceleration
+            count += 1
+
+
 
         scb.update()
         donkey_group.update(GRAVITY, MIN_HEIGHT)
@@ -93,6 +110,7 @@ def game():
 
         pygame.display.update()
 
+        #Collision 
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
             break
 
