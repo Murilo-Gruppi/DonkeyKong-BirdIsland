@@ -15,5 +15,5 @@ dkbirdisland
 ```
 
 # Game Controls
-  🡑 Jump <br>
-  🡓 Fall faster
+  ``` 🡑 ``` Jump <br>
+  ``` 🡓 ``` Fall faster
