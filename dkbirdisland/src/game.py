@@ -96,8 +96,6 @@ def game():
             GAME_SPEED += acceleration
             count += 1
 
-
-
         scb.update()
         donkey_group.update(GRAVITY, MIN_HEIGHT)
         obstacle_group.update(GAME_SPEED)
@@ -110,12 +108,11 @@ def game():
 
         pygame.display.update()
 
-        #Collision 
+        # Collision
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
             break
 
         clock.tick(20)
 
-        
     pygame.quit()
 
