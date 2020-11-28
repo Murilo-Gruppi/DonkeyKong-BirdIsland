@@ -1,6 +1,7 @@
 import pygame
 from . import tools
 
+
 class Donkey(pygame.sprite.Sprite):
     def __init__(self, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
         pygame.sprite.Sprite.__init__(self)
@@ -17,6 +18,8 @@ class Donkey(pygame.sprite.Sprite):
                             tools.load_img('animations/Jump (3).png').convert_alpha(),
                             tools.load_img('animations/Jump (4).png').convert_alpha(),
                             tools.load_img('animations/Jump (5).png').convert_alpha()]
+
+        self.jump_sound = tools.load_sound('jump_sound.wav', 0.3)
 
         self.speed = SPEED_JUMP
         self.isJumping = False
@@ -54,10 +57,11 @@ class Donkey(pygame.sprite.Sprite):
 
     def jump(self, SPEED_JUMP, MIN_HEIGHT):
         if self.rect[1] == MIN_HEIGHT:
+            self.jump_sound.play()
             self.speed -= SPEED_JUMP
             self.current_image = 0
             self.isJumping = True
-    
+
     def down(self, SPEED_JUMP, MIN_HEIGHT, GRAVITY):
         if self.rect[1] < MIN_HEIGHT:
             self.speed += SPEED_JUMP + GRAVITY
