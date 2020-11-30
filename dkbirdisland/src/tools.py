@@ -19,3 +19,11 @@ def load_sound(name, volume):
     sound = pygame.mixer.Sound(path)
     sound.set_volume(volume)
     return sound
+
+def play_music(name, volume):
+    path = os.path.join(MAIN_DIR, '../sounds', name)
+    pygame.mixer.music.load(path)
+    pygame.mixer.music.set_volume(volume)
+    pygame.mixer.music.play(loops=-1)
+
+
