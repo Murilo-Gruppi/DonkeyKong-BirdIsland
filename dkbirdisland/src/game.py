@@ -1,5 +1,6 @@
 import pygame
 import random
+from . import menu
 from .donkey import Donkey
 from .ground import Ground
 from .obstacles import Obstacles
@@ -7,7 +8,7 @@ from .scoreboard import Scoreboard
 from . import tools
 
 
-def game():
+def game(screen):
     pygame.display.set_caption("Donkey Kong: Bird Island")
 
     pygame.font.init()
@@ -29,7 +30,6 @@ def game():
 
     pygame.init()
 
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     BACKGROUND = tools.load_img("background.png")
 
     # Defining groups and instantiating objects
