@@ -85,7 +85,7 @@ def game(screen):
             new_obstacle1 = Obstacles(random.randint(800, 1300), SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED)
             obstacle_group.add(new_obstacle1)
 
-        #Acceleration
+        # Acceleration
         acceleration = 0
         if GAME_SPEED < 60:
             if count == 100:
@@ -110,7 +110,7 @@ def game(screen):
 
         # Collision
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
-            break
+            menu.menu(screen)
 
         clock.tick(20)
 

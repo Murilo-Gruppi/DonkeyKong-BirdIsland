@@ -7,42 +7,48 @@ def menu(screen):
     pygame.init()
     if not pygame.mixer.get_init():
         pygame.mixer.init()
-    
+
     class Main_Menu:
         def __init__(self):
-            self.text = 'Press any key to start'
-            self.font = tools.load_font('ARCADEPI.ttf', 30)
+            self.press = tools.load_img('press.png')
+            self.background = tools.load_img("menu.png")
+            self.verify = 1
 
         def update(self):
-            self.text_menu = self.font.render(self.text, True, (255, 255, 255))
-        def draw(self, screen):
-            screen.blit(self.text_menu, (170, 300))
+            if self.verify:
+                screen.blit(self.press, (130, 300))
+                self.verify = 0
+            else:
+                self.verify = 1
 
-    BACKGROUND = tools.load_img("background.png")
+        def draw(self):
+            screen.blit(self.background, (0, 0))
 
     pygame.display.set_caption('Donkey Kong: Bird Island')
-    clock = pygame.time.Clock()
-    
-    #Plays music
+
+    # Plays music
     volume = 0.3
     tools.play_music('music_menu.wav', volume)
-    text_menu = Main_Menu()
-
+    menu = Main_Menu()
     running = True
+
     while running:
-        clock.tick(15)
+        pygame.time.delay(500)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
             if event.type == pygame.KEYDOWN:
-                pygame.mixer.music.pause()
+                pygame.mixer.music.stop()
+                screen.fill((0, 0, 0))
+                pygame.display.update()
+                pygame.time.wait(400)
                 game(screen)
-        screen.blit(BACKGROUND, (0, 0))
 
-        text_menu.update()
-        text_menu.draw(screen)
+        menu.draw()
+        menu.update()
 
         pygame.display.update()
+
     pygame.quit()
