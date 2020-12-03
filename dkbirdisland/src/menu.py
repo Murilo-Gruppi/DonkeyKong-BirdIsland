@@ -1,4 +1,5 @@
 import pygame
+import sys
 from . import tools
 from .game import game
 
@@ -38,6 +39,8 @@ def menu(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                pygame.quit()
+                sys.exit()
 
             if event.type == pygame.KEYDOWN:
                 pygame.mixer.music.stop()
@@ -51,4 +54,28 @@ def menu(screen):
 
         pygame.display.update()
 
-    pygame.quit()
+def gameover(screen):
+    pygame.init()
+
+    class GameOver:
+        def __init__(self):
+            self.background = tools.load_img('background.png')
+        def draw(self, screen):
+            screen.blit(self.background, (0,0))
+
+    gameover = GameOver()
+    
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    game(screen)
+
+        gameover.draw(screen)
+
+        pygame.display.update()
