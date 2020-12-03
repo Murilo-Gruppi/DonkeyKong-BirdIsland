@@ -1,6 +1,7 @@
 import pygame
 import random
-from . import menu
+import sys
+from . import menus
 from .donkey import Donkey
 from .ground import Ground
 from .obstacles import Obstacles
@@ -34,7 +35,7 @@ def game(screen):
 
     # Defining groups and instantiating objects
     donkey_group = pygame.sprite.Group()
-    donkey = Donkey(MIN_HEIGHT, SPEED_JUMP, GRAVITY)
+    donkey = Donkey(MIN_HEIGHT, SPEED_JUMP)
     donkey_group.add(donkey)
 
     ground_group = pygame.sprite.Group()
@@ -58,6 +59,8 @@ def game(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                pygame.quit()
+                sys.exit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
@@ -110,9 +113,7 @@ def game(screen):
 
         # Collision
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
-            menu.gameover(screen)
+            menus.gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY)
 
         clock.tick(20)
-
-    pygame.quit()
 

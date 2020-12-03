@@ -3,7 +3,7 @@ from . import tools
 
 
 class Donkey(pygame.sprite.Sprite):
-    def __init__(self, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
+    def __init__(self, MIN_HEIGHT, SPEED_JUMP):
         pygame.sprite.Sprite.__init__(self)
 
         self.images_walk = [tools.load_img('animations/Andar (1).png').convert_alpha(),
@@ -19,10 +19,17 @@ class Donkey(pygame.sprite.Sprite):
                             tools.load_img('animations/Jump (4).png').convert_alpha(),
                             tools.load_img('animations/Jump (5).png').convert_alpha()]
 
-        self.jump_sound = tools.load_sound('jump_sound.wav', 0.3)
+        self.images_not = [tools.load_img('animations/Not (1).png').convert_alpha(),
+                           tools.load_img('animations/Not (2).png').convert_alpha(),
+                           tools.load_img('animations/Not (3).png').convert_alpha(),
+                           tools.load_img('animations/Not (4).png').convert_alpha(),
+                           tools.load_img('animations/Not (5).png').convert_alpha(),]
 
+        self.jump_sound = tools.load_sound('jump_sound.wav', 0.3)
         self.speed = SPEED_JUMP
         self.isJumping = False
+        self.isDead = False
+        self.n = -1
         self.IMAGE_INTERVAL = 110
         self.last_update = 0
         self.current_image = 0
@@ -35,6 +42,8 @@ class Donkey(pygame.sprite.Sprite):
     def update(self, GRAVITY, MIN_HEIGHT):
         if self.isJumping:
             self.current_list = self.images_jump
+        elif self.isDead:
+            self.current_list = self.images_not
         else:
             self.current_list = self.images_walk
 
@@ -43,17 +52,25 @@ class Donkey(pygame.sprite.Sprite):
                 self.current_image = (self.current_image + 1) % len(self.current_list)
                 self.image = self.current_list[self.current_image]
                 self.last_update = pygame.time.get_ticks()
-        else:
+        elif self.current_list == self.images_walk:
             self.current_image = (self.current_image + 1) % len(self.current_list)
+            self.image = self.current_list[self.current_image]
+        else:
+            if self.current_image == 4 or self.current_image == 0:
+                self.n *= -1
+            self.current_image = (self.current_image + self.n)
             self.image = self.current_list[self.current_image]
 
         self.speed += GRAVITY
         self.rect[1] += self.speed
 
         if self.rect[1] > MIN_HEIGHT:
-            self.rect[1] = MIN_HEIGHT
-            self.speed = 0
-            self.isJumping = False
+            if self.isDead:
+                self.rect[1] = 267
+            else:
+                self.rect[1] = MIN_HEIGHT
+                self.speed = 0
+                self.isJumping = False
 
     def jump(self, SPEED_JUMP, MIN_HEIGHT):
         if self.rect[1] == MIN_HEIGHT:
@@ -65,3 +82,9 @@ class Donkey(pygame.sprite.Sprite):
     def down(self, SPEED_JUMP, MIN_HEIGHT, GRAVITY):
         if self.rect[1] < MIN_HEIGHT:
             self.speed += SPEED_JUMP + GRAVITY
+
+    def sad(self):
+        self.rect[0] = 370
+        self.rect[1] = 267
+        self.isDead = True
+        self.current_list = self.images_not

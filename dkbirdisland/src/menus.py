@@ -2,6 +2,7 @@ import pygame
 import sys
 from . import tools
 from .game import game
+from .donkey import Donkey
 
 
 def menu(screen):
@@ -54,28 +55,46 @@ def menu(screen):
 
         pygame.display.update()
 
-def gameover(screen):
+
+def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
     pygame.init()
 
     class GameOver:
         def __init__(self):
-            self.background = tools.load_img('background.png')
-        def draw(self, screen):
-            screen.blit(self.background, (0,0))
+            self.background = tools.load_img('game_over.png')
+            self.retry_button = tools.load_img('retry.png')
+            self.retry_button = pygame.transform.scale(self.retry_button, (60, 60))
 
-    gameover = GameOver()
-    
+        def draw(self, screen):
+            screen.blit(self.background, (0, 0))
+            screen.blit(self.retry_button, (370, 190))
+
+    game_over = GameOver()
+
+    donkey_group = pygame.sprite.Group()
+    donkey = Donkey(MIN_HEIGHT, SPEED_JUMP)
+    donkey_group.add(donkey)
+
     running = True
     while running:
+        pygame.time.delay(100)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
                 sys.exit()
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    screen.fill((0, 0, 0))
+                    pygame.display.update()
+                    pygame.time.wait(400)
                     game(screen)
 
-        gameover.draw(screen)
+        game_over.draw(screen)
+        donkey.sad()
+        donkey_group.update(GRAVITY, MIN_HEIGHT)
+        donkey_group.draw(screen)
 
         pygame.display.update()

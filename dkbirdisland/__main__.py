@@ -1,11 +1,11 @@
 import pygame
-from .src import menu
+from .src import menus
 
 screen = pygame.display.set_mode((800, 350))
 
 
 def main():
-    menu.menu(screen)
+    menus.menu(screen)
 
 
 if __name__ == '__main__':
