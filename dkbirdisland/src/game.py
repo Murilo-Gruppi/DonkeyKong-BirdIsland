@@ -110,7 +110,7 @@ def game(screen):
 
         # Collision
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
-            menu.menu(screen)
+            menu.gameover(screen)
 
         clock.tick(20)
 
