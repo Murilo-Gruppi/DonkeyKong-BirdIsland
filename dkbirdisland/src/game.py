@@ -47,7 +47,7 @@ def game(screen):
     obstacle = Obstacles(800, SCREEN_HEIGHT, GROUND_HEIGHT, GAME_SPEED)
     obstacle_group.add(obstacle)
 
-    scb = Scoreboard()
+    scb = Scoreboard(screen)
 
     clock = pygame.time.Clock()
 
@@ -70,6 +70,7 @@ def game(screen):
                     donkey.down(SPEED_JUMP, MIN_HEIGHT, GRAVITY)
 
         screen.blit(BACKGROUND, (0, 0))
+        scb.display(screen)
 
         # Adds a new ground and remove
         if is_off_screen(ground_group.sprites()[0]):
@@ -104,7 +105,6 @@ def game(screen):
         obstacle_group.update(GAME_SPEED)
         ground_group.update(GAME_SPEED)
 
-        scb.draw(screen)
         donkey_group.draw(screen)
         obstacle_group.draw(screen)
         ground_group.draw(screen)
@@ -113,6 +113,7 @@ def game(screen):
 
         # Collision
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
+            scb.add()
             menus.gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY)
 
         clock.tick(20)
