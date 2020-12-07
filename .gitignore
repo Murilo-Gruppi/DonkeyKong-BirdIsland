@@ -128,9 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# high_score
-*.db
-*.txt
-*.txt.dat
-*.txt.bak
-*.txt.dir
+
