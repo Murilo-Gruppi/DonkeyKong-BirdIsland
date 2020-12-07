@@ -1,6 +1,7 @@
 import pygame
 import sys
 from . import tools
+from .scoreboard import Scoreboard
 from .game import game
 from .donkey import Donkey
 
@@ -72,6 +73,7 @@ def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
             screen.blit(self.retry_button, (370, 190))
 
     game_over = GameOver()
+    scb = Scoreboard(screen)
 
     tools.play_music('gameover_music.ogg', 0.3)
 
@@ -98,6 +100,7 @@ def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
                     game(screen)
 
         game_over.draw(screen)
+        scb.draw(screen)
         donkey.sad()
         donkey_group.update(GRAVITY, MIN_HEIGHT)
         donkey_group.draw(screen)
