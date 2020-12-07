@@ -30,7 +30,7 @@ def menu(screen):
 
     # Plays music
     volume = 0.3
-    tools.play_music('music_menu.wav', volume)
+    tools.play_music('menu_music.ogg', volume)
     menu = Main_Menu()
     running = True
 
@@ -58,6 +58,8 @@ def menu(screen):
 
 def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
     pygame.init()
+    if not pygame.mixer.get_init():
+        pygame.mixer.init()
 
     class GameOver:
         def __init__(self):
@@ -70,6 +72,8 @@ def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
             screen.blit(self.retry_button, (370, 190))
 
     game_over = GameOver()
+
+    tools.play_music('gameover_music.ogg', 0.3)
 
     donkey_group = pygame.sprite.Group()
     donkey = Donkey(MIN_HEIGHT, SPEED_JUMP)
@@ -87,6 +91,7 @@ def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    pygame.mixer.music.stop()
                     screen.fill((0, 0, 0))
                     pygame.display.update()
                     pygame.time.wait(400)

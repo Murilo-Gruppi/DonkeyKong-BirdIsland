@@ -12,7 +12,10 @@ from . import tools
 def game(screen):
     pygame.display.set_caption("Donkey Kong: Bird Island")
 
+    pygame.init()
     pygame.font.init()
+    if not pygame.mixer.get_init():
+        pygame.mixer.init()
 
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 350
@@ -29,9 +32,9 @@ def game(screen):
     def get_random(sprite, width):
         return sprite.rect[0] <= width
 
-    pygame.init()
 
     BACKGROUND = tools.load_img("background.png")
+    tools.play_music('game_music.ogg', 0.3)
 
     # Defining groups and instantiating objects
     donkey_group = pygame.sprite.Group()
@@ -113,6 +116,10 @@ def game(screen):
 
         # Collision
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
+            pygame.mixer.music.stop()
+            screen.fill((0, 0, 0))
+            pygame.display.update()
+            pygame.time.wait(400)
             scb.add()
             menus.gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY)
 
