@@ -130,6 +130,7 @@ dmypy.json
 
 # high_score
 *.db
+*.txt
 *.txt.dat
 *.txt.bak
 *.txt.dir
