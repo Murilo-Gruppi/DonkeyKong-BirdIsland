@@ -6,12 +6,12 @@ class Donkey(pygame.sprite.Sprite):
     def __init__(self, MIN_HEIGHT, SPEED_JUMP):
         pygame.sprite.Sprite.__init__(self)
 
-        self.images_walk = [tools.load_img('animations/Andar (1).png').convert_alpha(),
-                            tools.load_img('animations/Andar (2).png').convert_alpha(),
-                            tools.load_img('animations/Andar (3).png').convert_alpha(),
-                            tools.load_img('animations/Andar (4).png').convert_alpha(),
-                            tools.load_img('animations/Andar (5).png').convert_alpha(),
-                            tools.load_img('animations/Andar (6).png').convert_alpha()]
+        self.images_walk = [tools.load_img('animations/Walk (1).png').convert_alpha(),
+                            tools.load_img('animations/Walk (2).png').convert_alpha(),
+                            tools.load_img('animations/Walk (3).png').convert_alpha(),
+                            tools.load_img('animations/Walk (4).png').convert_alpha(),
+                            tools.load_img('animations/Walk (5).png').convert_alpha(),
+                            tools.load_img('animations/Walk (6).png').convert_alpha()]
 
         self.images_jump = [tools.load_img('animations/Jump (1).png').convert_alpha(),
                             tools.load_img('animations/Jump (2).png').convert_alpha(),
@@ -23,7 +23,7 @@ class Donkey(pygame.sprite.Sprite):
                            tools.load_img('animations/Not (2).png').convert_alpha(),
                            tools.load_img('animations/Not (3).png').convert_alpha(),
                            tools.load_img('animations/Not (4).png').convert_alpha(),
-                           tools.load_img('animations/Not (5).png').convert_alpha(),]
+                           tools.load_img('animations/Not (5).png').convert_alpha()]
 
         self.jump_sound = tools.load_sound('jump_sound.wav', 0.3)
         self.speed = SPEED_JUMP
