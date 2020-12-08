@@ -92,12 +92,11 @@ def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    pygame.mixer.music.stop()
-                    screen.fill((0, 0, 0))
-                    pygame.display.update()
-                    pygame.time.wait(400)
-                    game(screen)
+                pygame.mixer.music.stop()
+                screen.fill((0, 0, 0))
+                pygame.display.update()
+                pygame.time.wait(400)
+                game(screen)
 
         game_over.draw(screen)
         scb.draw(screen)
