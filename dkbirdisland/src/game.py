@@ -10,7 +10,6 @@ from . import tools
 
 
 def game(screen):
-    pygame.display.set_caption("Donkey Kong: Bird Island")
 
     pygame.init()
     pygame.font.init()
@@ -35,6 +34,7 @@ def game(screen):
 
     BACKGROUND = tools.load_img("background.png")
     tools.play_music('game_music.ogg', 0.3)
+    impact_sound = tools.load_sound('impact.wav', 0.3)
 
     # Defining groups and instantiating objects
     donkey_group = pygame.sprite.Group()
@@ -117,6 +117,7 @@ def game(screen):
         # Collision
         if pygame.sprite.groupcollide(donkey_group, obstacle_group, False, False, pygame.sprite.collide_mask):
             pygame.mixer.music.stop()
+            impact_sound.play()
             screen.fill((0, 0, 0))
             pygame.display.update()
             pygame.time.wait(400)

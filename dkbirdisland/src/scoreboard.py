@@ -12,6 +12,7 @@ class Scoreboard:
         self.last_score = '00000'
         self.high_score = '00000'
         self.font = tools.load_font('ARCADEPI.ttf', 23)
+        self.color = (255, 255, 255)
 
         d = shelve.open(SHELVE_PATH)
 
@@ -46,6 +47,14 @@ class Scoreboard:
 
         d.close()
 
-    def draw(self, screen):
-        self.scoreboard = self.font.render(self.last_score, False, (255, 255, 255))
-        screen.blit(self.scoreboard, (705, 5))
+    def draw(self, screen, verify):
+        if verify:
+            self.color = (255, 255, 0)
+            self.scoreboard = self.font.render('NEW HI ' + self.last_score, False, self.color)
+            screen.blit(self.scoreboard, (586, 5))
+        else:
+            self.scoreboard = self.font.render(self.last_score, False, self.color)
+            screen.blit(self.scoreboard, (705, 5))
+
+    def new_hi(self):
+        return self.last_score == self.high_score

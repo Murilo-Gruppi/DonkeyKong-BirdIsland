@@ -27,7 +27,9 @@ def menu(screen):
         def draw(self):
             screen.blit(self.background, (0, 0))
 
+    icon = tools.load_img('icon.png')
     pygame.display.set_caption('Donkey Kong: Bird Island')
+    pygame.display.set_icon(icon)
 
     # Plays music
     volume = 0.3
@@ -66,16 +68,20 @@ def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
         def __init__(self):
             self.background = tools.load_img('game_over.png')
             self.retry_button = tools.load_img('retry.png')
-            self.retry_button = pygame.transform.scale(self.retry_button, (60, 60))
+            self.retry_button = pygame.transform.scale(self.retry_button, (50, 50))
 
         def draw(self, screen):
             screen.blit(self.background, (0, 0))
-            screen.blit(self.retry_button, (370, 190))
+            screen.blit(self.retry_button, (375, 180))
 
     game_over = GameOver()
     scb = Scoreboard(screen)
+    NEW_HI = scb.new_hi()
 
-    tools.play_music('gameover_music.ogg', 0.3)
+    if NEW_HI:
+        tools.play_music('nostalgic.ogg', 0.7)
+    else:
+        tools.play_music('gameover_music.ogg', 0.3)
 
     donkey_group = pygame.sprite.Group()
     donkey = Donkey(MIN_HEIGHT, SPEED_JUMP)
@@ -99,8 +105,8 @@ def gameover(screen, MIN_HEIGHT, SPEED_JUMP, GRAVITY):
                 game(screen)
 
         game_over.draw(screen)
-        scb.draw(screen)
-        donkey.sad()
+        scb.draw(screen, NEW_HI)
+        donkey.sad(NEW_HI)
         donkey_group.update(GRAVITY, MIN_HEIGHT)
         donkey_group.draw(screen)
 
