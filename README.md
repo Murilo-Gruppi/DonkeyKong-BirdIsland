@@ -17,3 +17,11 @@ dkbirdisland
 # Game Controls
   ``` ↑ ``` Jump <br>
   ``` ↓ ``` Fall faster
+
+# Credits
+Programmed by
+
+Murilo Castro
+E-mail: murilo.castro@ccc.ufcg.edu.br
+Pedro Lúcio
+E-mail: pedro.lucio@ccc.ufcg.edu.br
