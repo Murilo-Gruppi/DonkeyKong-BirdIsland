@@ -21,7 +21,7 @@ dkbirdisland
 # Credits
 Programmed by
 
-Murilo Castro
-E-mail: murilo.castro@ccc.ufcg.edu.br
-Pedro Lúcio
+Murilo Castro <br>
+E-mail: murilo.castro@ccc.ufcg.edu.br <br>
+Pedro Lúcio <br>
 E-mail: pedro.lucio@ccc.ufcg.edu.br
